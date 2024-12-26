@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Database\Migrations;
+
+use CodeIgniter\Database\Migration;
+use CodeIgniter\Database\RawSql;
+
+class AdminToken extends Migration
+{
+    public function up()
+    {
+        $this->forge->addField([
+            'id' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'auto_increment' => true
+            ],
+            'email' => [
+                'type' => 'VARCHAR',
+                'constraint' => 220
+            ],
+            'token' => [
+                'type' => 'VARCHAR',
+                'constraint' => 300  
+            ],
+            'expired_at' => [
+                'type' => 'TIMESTAMP'
+            ],
+        ]);
+
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addUniqueKey('email');
+        $this->forge->createTable('admin_tokens');
+    }
+
+    public function down()
+    {
+        $this->forge->dropTable('admin_tokens');
+    }
+}
